@@ -1,0 +1,18 @@
+# R Utilitiy functions: APIs
+
+# Getting data from a CARTO API
+getData_phlCartoApi <- function(query){
+  
+  # construct Request.
+  service <- 'https://phl.carto.com/api/v2/sql?q='
+  query   <- query
+  url     <- URLencode(paste(service,query,sep=''))
+  
+  # Get Data
+  request <- httr::GET(url)
+  data    <- httr::content(request)
+  
+  #TODO: add any level of testing or error handling...
+  
+  return(data)
+}
