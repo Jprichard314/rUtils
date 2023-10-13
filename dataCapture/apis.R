@@ -30,6 +30,11 @@ getData_phlCartoApi <- function(query,format = 'CSV'){
   data <- do.call(
       rbind
     , data_raw
-  )
+  ) %>%
+  as.data.frame %>%
+  # Coerce all data to characters from lists
+  mutate_all(as.character) %>%
+  # Rewrite nulls to NA
+  mutate_all(na_if,"NULL")
   return(data)
 }
