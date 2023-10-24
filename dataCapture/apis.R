@@ -9,14 +9,14 @@ getData_phlCartoApi <- function(query,format = 'CSV'){
   query   <- query
   format  <- format
   url     <- URLencode(
-      paste(
-            service
-          , query
-          ,"&Format=", format
-          , sep=''
-          )
-      )
-
+    paste(
+      service
+      , query
+      ,"&Format=", format
+      , sep=''
+    )
+  )
+  
   # Get Data
   request <- httr::GET(url)
   
@@ -28,13 +28,13 @@ getData_phlCartoApi <- function(query,format = 'CSV'){
   
   # Write data to a data.frame
   data <- do.call(
-      rbind
+    rbind
     , data_raw
   ) %>%
-  as.data.frame %>%
-  # Coerce all data to characters from lists
-  mutate_all(as.character) %>%
-  # Rewrite nulls to NA
-  mutate_all(na_if,"NULL")
+    as.data.frame %>%
+    # Coerce all data to characters from lists
+    mutate_all(as.character) %>%
+    # Rewrite nulls to NA
+    mutate_all(na_if,"NULL")
   return(data)
 }
