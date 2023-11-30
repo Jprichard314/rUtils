@@ -9,8 +9,6 @@ countNA <- function(data)
 countUnique <- function(data)
 {
   return(data %>% unique %>% length())
-  
-  
 }
 
 simpleEdaScript <- function(df)
