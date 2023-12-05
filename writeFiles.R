@@ -8,6 +8,8 @@ writeFunction__toSQL <- function(
   , name
   , port
   , driver
+  , overwrite = TRUE
+  , append = FALSE
 )
 {
   # Connect to database:
@@ -27,7 +29,8 @@ writeFunction__toSQL <- function(
       conn
     , name = Id(schema = schema, table = name)
     , value = dataset
-    , overwrite = TRUE
+    , overwrite = overwrite
+    , append = append
   )
   
   
