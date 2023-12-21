@@ -71,3 +71,42 @@ getData_cartoDbMonthQuery <- function(
   temp <- getData_phlCartoApi( query )
   return(temp)
 }
+
+
+getData_fredDataSeries <- function(series, key)
+{
+ # generate URL
+  service  <- "https://api.stlouisfed.org/fred/series/observations?"
+  series   <- series
+  apiKey   <- key
+  url     <- URLencode(
+    paste(
+        service
+      ,"series_id=", series
+      ,"&api_key=",apiKey
+      ,"&file_type=json"
+      , sep=''
+    )
+  )
+  
+  # Get Data
+  request <- httr::GET(url)
+  
+  # Convert
+  data_raw <- httr::content(request)$observations
+  
+  # Write data to a data.frame
+  data <- do.call(
+      rbind
+    , data_raw
+  ) %>%
+    as.data.frame %>%
+    # Coerce all data to characters from lists
+    mutate_all(as.character) %>%
+    # Rewrite nulls to NA
+    mutate_all(na_if,"NULL")
+  return(data)
+  
+  
+}
+
